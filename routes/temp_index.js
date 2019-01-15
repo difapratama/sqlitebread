@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
   const url = req.url == '/' ? '/?page=1' : req.url
   let params = [];
   let isFilter = false;
-
+  
   if (req.query.checkid && req.query.formid) {
     params.push(`id=${req.query.formid}`);
     isFilter = true;
@@ -25,18 +25,6 @@ router.get('/', function (req, res, next) {
   }
   if (req.query.checkinteger && req.query.forminteger) {
     params.push(`integer=${req.query.forminteger}`);
-    isFilter = true;
-  }
-  if (req.query.checkfloat && req.query.formfloat) {
-    params.push(`float=${req.query.formfloat}`);
-    isFilter = true;
-  }
-  if (req.query.checkdate && req.query.startdate && req.query.enddate) {
-    params.push(`date between '${req.query.startdate}' and '${req.query.enddate}'`);
-    isFilter = true;
-  }
-  if (req.query.checkboolean && req.query.boolean) {
-    params.push(`boolean=${req.query.boolean}`);
     isFilter = true;
   }
   let sql = `select count(*) as total from data`;
@@ -55,13 +43,29 @@ router.get('/', function (req, res, next) {
       res.render('index', {
         rows,
         page,
+
         pages,
+
         query: req.query,
+
         url
+
       });
+
     });
+
   });
+
+
+
 });
+
+
+
+
+
+
+
 
 router.get('/add', function (req, res, next) {
   res.render('add');
